@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DDDPPP.Chap19.EFExample.Application.Model.Auction
+namespace DDDPPP.Chap19.EFExample.Application.Infrastructure
 {
-    public class AuctionTime
+    public interface IClock
     {
-        public TimeZone TimeZone {get; set;}
+        DateTime Time();
     }
 }

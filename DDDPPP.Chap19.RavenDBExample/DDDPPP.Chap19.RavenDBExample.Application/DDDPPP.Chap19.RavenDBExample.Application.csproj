@@ -64,7 +64,6 @@
     <Compile Include="Infrastructure\BidHistory.cs" />
     <Compile Include="Infrastructure\DomainEvents.cs" />
     <Compile Include="Model\Auction\Auction.cs" />
-    <Compile Include="Model\Auction\AuctionTime.cs" />
     <Compile Include="Model\Auction\AutomaticBidder.cs" />
     <Compile Include="Model\Auction\Bidder.cs" />
     <Compile Include="Model\Auction\BidPlaced.cs" />
@@ -76,7 +75,6 @@
     <Compile Include="Infrastructure\SystemClock.cs" />
     <Compile Include="Model\BidHistory\BidEvent.cs" />
     <Compile Include="Model\Auction\IAuctions.cs" />
-    <Compile Include="Model\Auction\Item.cs" />
     <Compile Include="Model\Auction\Bid.cs" />
     <Compile Include="Model\BidHistory\BidHistory.cs" />
     <Compile Include="Model\BidHistory\IBidHistory.cs" />

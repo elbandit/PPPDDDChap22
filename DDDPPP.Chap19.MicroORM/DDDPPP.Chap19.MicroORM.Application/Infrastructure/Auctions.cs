@@ -119,11 +119,6 @@ namespace DDDPPP.Chap19.MicroORM.Application.Infrastructure
                     , new { Id = auctionDTO.Id, StartingPrice = auctionDTO.StartingPrice, BidderMemberId = auctionDTO.BidderMemberId, 
                             TimeOfBid = auctionDTO.TimeOfBid, MaximumBid = auctionDTO.MaximumBid, CurrentPrice = auctionDTO.CurrentPrice,
                             AuctionEnds = auctionDTO.AuctionEnds, Version = auctionDTO.Version });
-
-                if (recordsAdded.Equals(1))
-                {
-                    // 1 rows inserted or throw concurrney exception
-                }  
             }
         }
 
@@ -146,7 +141,7 @@ namespace DDDPPP.Chap19.MicroORM.Application.Infrastructure
                        ,[AuctionEnds] = @AuctionEnds
                        ,[Version] = @Version
                     WHERE
-                        Id = @Id"
+                        Id = @Id AND Version = @PreviousVersion"
                     , new
                     {
                         Id = auctionDTO.Id,
@@ -156,13 +151,13 @@ namespace DDDPPP.Chap19.MicroORM.Application.Infrastructure
                         MaximumBid = auctionDTO.MaximumBid,
                         CurrentPrice = auctionDTO.CurrentPrice,
                         AuctionEnds = auctionDTO.AuctionEnds,
-                        Version = auctionDTO.Version
+                        Version = auctionDTO.Version + 1,
+                        PreviousVersion = auctionDTO.Version
                     });
 
-                // 1 rows inserted or throw concurrney exception
-                if (recordsUpdated.Equals(1))
+                if (!recordsUpdated.Equals(1))
                 {
-                    // 1 rows inserted or throw concurrney exception
+                    throw new ConcurrencyException();
                 }  
             }
         }
