@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DDDPPP.Chap19.MicroORM.Application;
 using DDDPPP.Chap19.MicroORM.Application.Application.BusinessTasks;
 using DDDPPP.Chap19.MicroORM.Application.Application.Queries;
+using DDDPPP.Chap19.MicroORM.Application;
 using StructureMap;
 
 namespace DDDPPP.Chap19.MicroORM.Presentation
