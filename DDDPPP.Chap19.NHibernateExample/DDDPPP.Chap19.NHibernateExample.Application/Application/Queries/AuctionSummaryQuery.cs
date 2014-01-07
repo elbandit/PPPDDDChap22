@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NHibernate;
 using NHibernate.Criterion;
 using NHibernate.Transform;
-using DDDPPP.Chap19.NHibernateExample.Application.Model.Auction;
 using DDDPPP.Chap19.NHibernateExample.Application.Model.BidHistory;
 using DDDPPP.Chap19.NHibernateExample.Application.Infrastructure;
 

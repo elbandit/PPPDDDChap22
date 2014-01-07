@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DDDPPP.Chap19.NHibernateExample.Application.Application.BusinessTasks;
 using DDDPPP.Chap19.NHibernateExample.Application.Application.Queries;
 using DDDPPP.Chap19.NHibernateExample.Application;
@@ -99,7 +96,7 @@ namespace DDDPPP.Chap19.NHibernateExampleExample.Presentation
             Console.WriteLine();
         }
 
-        public static void  PrintBidHistoryOf(Guid auctionId)
+        public static void PrintBidHistoryOf(Guid auctionId)
         {
             var bidHistoryQuery = ObjectFactory.GetInstance<BidHistoryQuery>();
             var status = bidHistoryQuery.BidHistoryFor(auctionId);

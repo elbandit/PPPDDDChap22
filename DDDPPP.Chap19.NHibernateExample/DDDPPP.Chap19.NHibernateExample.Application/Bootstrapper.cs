@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using StructureMap;
 using DDDPPP.Chap19.NHibernateExample.Application.Infrastructure;
 using DDDPPP.Chap19.NHibernateExample.Application.Model.Auction;
@@ -17,9 +14,7 @@ namespace DDDPPP.Chap19.NHibernateExample.Application
         public static void Startup()
         {
             Configuration config = new Configuration();
-           
-            //log4net.Config.XmlConfigurator.Configure();
-
+                       
             config.Configure();
             config.AddAssembly("DDDPPP.Chap19.NHibernateExample.Application");
 

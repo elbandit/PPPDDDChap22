@@ -16,7 +16,6 @@
       <property name="Value" column="Bid" not-null="false"/>
     </component>
 
-    <property name="TimeOfBid" column="TimeOfBid" not-null="false"/>
-    
+    <property name="TimeOfBid" column="TimeOfBid" not-null="false"/>    
   </class>
 </hibernate-mapping>
