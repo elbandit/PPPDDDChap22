@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using DDDPPP.Chap19.NHibernateExample.Application.Infrastructure;
+using NHibernate.Mapping;
 
 namespace DDDPPP.Chap19.NHibernateExample.Application.Model.Auction
 {
-    public class Price
+    public class Price : ValueObject<Price>
     {
         private Price()
         { }
@@ -33,6 +36,11 @@ namespace DDDPPP.Chap19.NHibernateExample.Application.Model.Auction
         public bool CanBeExceededBy(Money offer)
         {
             return offer.IsGreaterThanOrEqualTo(BidIncrement());
+        }
+
+        protected override IEnumerable<object> GetAttributesToIncludeInEqualityCheck()
+        {
+            return new List<Object>() {Amount};
         }
     }
 }

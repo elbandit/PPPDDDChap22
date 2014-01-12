@@ -7,7 +7,7 @@ using DDDPPP.Chap19.NHibernateExample.Application.Application;
 
 namespace DDDPPP.Chap19.NHibernateExample.Application.Infrastructure
 {
-    public class Auctions : IAuctions
+    public class Auctions : IAuctionRepository
     {
         private readonly ISession _session;
 

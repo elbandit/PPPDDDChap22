@@ -2,9 +2,7 @@
 
 namespace DDDPPP.Chap19.NHibernateExample.Application.Model.Auction
 {
-    public interface IAuctions
+    public class MoreThanTwoDecimalPlacesInMoneyValueException : Exception 
     {
-        void Add(Auction auction);
-        Auction FindBy(Guid Id);
     }
 }

@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using DDDPPP.Chap19.NHibernateExample.Application.Infrastructure;
 
 namespace DDDPPP.Chap19.NHibernateExample.Application.Model.Auction
 {
-    public class Bid
+    public class Bid : ValueObject<Bid>
     {
         private Bid() { }
 
@@ -41,6 +42,11 @@ namespace DDDPPP.Chap19.NHibernateExample.Application.Model.Auction
         public bool HasNotReachedMaximumBid()
         {
             return MaximumBid.IsGreaterThan(CurrentAuctionPrice.Amount);
+        }
+
+        protected override IEnumerable<object> GetAttributesToIncludeInEqualityCheck()
+        {
+            return new List<Object>() { Bidder, MaximumBid, TimeOfBid, CurrentAuctionPrice };
         }
     }
 }

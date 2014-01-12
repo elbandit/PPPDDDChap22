@@ -4,7 +4,7 @@ using DDDPPP.Chap19.NHibernateExample.Application.Infrastructure;
 
 namespace DDDPPP.Chap19.NHibernateExample.Application.Model.Auction
 {
-    public class Auction : EntityBase
+    public class Auction : Entity
     {
         private Auction() { }
 
@@ -13,17 +13,16 @@ namespace DDDPPP.Chap19.NHibernateExample.Application.Model.Auction
             Id = id;
             StartingPrice = startingPrice;
             EndsAt = endsAt;
+
+            //if (DateTime.Now > EndsAt)
+                // throw exception
+               
         }
 
         public Guid Id { get; private set; }
         private Money StartingPrice { get; set; }
         private Bid CurrentWinningBid { get; set; }
         private DateTime EndsAt { get; set; }
-
-        private bool HasACurrentBid()
-        {
-            return CurrentWinningBid != null;
-        }
 
         private bool StillInProgress(DateTime currentTime)
         {

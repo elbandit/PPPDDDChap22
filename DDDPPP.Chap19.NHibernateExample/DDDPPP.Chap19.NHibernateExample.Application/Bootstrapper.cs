@@ -22,7 +22,7 @@ namespace DDDPPP.Chap19.NHibernateExample.Application
 
             ObjectFactory.Initialize(structureMapConfig =>
             {
-                structureMapConfig.For<IAuctions>().Use<Auctions>();
+                structureMapConfig.For<IAuctionRepository>().Use<Auctions>();
                 structureMapConfig.For<IBidHistory>().Use<Infrastructure.BidHistory>();
                 structureMapConfig.For<IClock>().Use<SystemClock>();
 

@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using DDDPPP.Chap19.NHibernateExample.Application.Infrastructure;
+using NHibernate.Mapping;
 
 namespace DDDPPP.Chap19.NHibernateExample.Application.Model.Auction
 {
-    public class Money
+    public class Money : ValueObject<Money>
     {
         protected decimal Value { get; set; }
-        // TODO: If we need to change currency we can do nice and easily here
 
         public Money()
             : this(0m)
@@ -14,7 +16,18 @@ namespace DDDPPP.Chap19.NHibernateExample.Application.Model.Auction
 
         public Money(decimal value)
         {
+            ThrowExceptionIfNotValid(value);
+
             Value = value;
+        }
+
+        private void ThrowExceptionIfNotValid(decimal value)
+        {
+            if (value % 0.01m != 0)
+                throw new MoreThanTwoDecimalPlacesInMoneyValueException();
+
+            if(value < 0)
+                throw new MoneyCannotBeANegativeValueException();
         }
 
         public Money add(Money money)
@@ -32,22 +45,16 @@ namespace DDDPPP.Chap19.NHibernateExample.Application.Model.Auction
             return this.Value > money.Value || this.Equals(money);
         }
 
-        public override bool Equals(System.Object obj)
-        {
-            if (obj == null) return false;
-            if (obj.GetType() != this.GetType()) return false;
-
-            return ((Money)obj).Value == Value;
-        }
-
-        public override int GetHashCode()
-        {
-            return Value.GetHashCode();
-        }
-
         public override string ToString()
         {
-            return string.Format("£{0}", Value);
+            return string.Format("{0}", Value);
+        }
+
+        // Equality Implementtion
+
+        protected override IEnumerable<object> GetAttributesToIncludeInEqualityCheck()
+        {
+            return new List<Object>() {Value};
         }
     }
 }

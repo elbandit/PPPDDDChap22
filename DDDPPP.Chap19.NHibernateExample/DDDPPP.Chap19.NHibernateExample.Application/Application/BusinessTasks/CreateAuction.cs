@@ -6,10 +6,10 @@ namespace DDDPPP.Chap19.NHibernateExample.Application.Application.BusinessTasks
 {
     public class CreateAuction
     {
-        private IAuctions _auctions;
+        private IAuctionRepository _auctions;
         private ISession _unitOfWork;
 
-        public CreateAuction(IAuctions auctions,ISession unitOfWork)
+        public CreateAuction(IAuctionRepository auctions,ISession unitOfWork)
         {
             _auctions = auctions;            
             _unitOfWork = unitOfWork;

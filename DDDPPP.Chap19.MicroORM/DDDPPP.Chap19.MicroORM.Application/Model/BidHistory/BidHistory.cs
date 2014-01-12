@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DDDPPP.Chap19.MicroORM.Application.Model.BidHistory
 {

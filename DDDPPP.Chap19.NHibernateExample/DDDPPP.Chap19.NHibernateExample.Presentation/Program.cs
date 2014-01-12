@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using DDDPPP.Chap19.NHibernateExample.Application.Application.BusinessTasks;
 using DDDPPP.Chap19.NHibernateExample.Application.Application.Queries;
 using DDDPPP.Chap19.NHibernateExample.Application;
+using DDDPPP.Chap19.NHibernateExample.Application.Model.Auction;
 using StructureMap;
 
-namespace DDDPPP.Chap19.NHibernateExampleExample.Presentation
+namespace DDDPPP.Chap19.NHibernateExample.Presentation
 {
     public class Program
     {

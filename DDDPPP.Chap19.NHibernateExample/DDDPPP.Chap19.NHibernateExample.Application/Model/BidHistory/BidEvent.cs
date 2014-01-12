@@ -4,7 +4,7 @@ using DDDPPP.Chap19.NHibernateExample.Application.Infrastructure;
 
 namespace DDDPPP.Chap19.NHibernateExample.Application.Model.BidHistory
 {
-    public class BidEvent : EntityBase
+    public class BidEvent : Entity
     {
         private BidEvent()
         { }

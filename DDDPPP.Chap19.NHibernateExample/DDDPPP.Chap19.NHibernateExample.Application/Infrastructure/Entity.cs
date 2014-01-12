@@ -2,7 +2,7 @@
 
 namespace DDDPPP.Chap19.NHibernateExample.Application.Infrastructure
 {
-    public abstract class EntityBase
+    public abstract class Entity
     {
         public int Version { get; private set; }
     }

@@ -50,7 +50,7 @@ namespace DDDPPP.Chap19.MicroORM.Application.Model.Auction
 
         public override string ToString()
         {
-            return string.Format("£{0}", Value);
+            return string.Format("{0}", Value);
         }
 
         public MoneySnapshot GetSnapshot()
