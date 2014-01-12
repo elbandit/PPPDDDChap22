@@ -9,7 +9,6 @@ namespace DDDPPP.Chap19.MicroORM.Application.Model.Auction
     public class Money
     {
         protected decimal Value { get; set; }
-        // TODO: If we need to change currency we can do nice and easily here
 
         public Money()
             : this(0m)

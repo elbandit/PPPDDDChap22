@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DDDPPP.Chap19.RavenDBExample.Application.Model.Auction;
 using Raven.Client;
 using DDDPPP.Chap19.RavenDBExample.Application.Application.Queries;

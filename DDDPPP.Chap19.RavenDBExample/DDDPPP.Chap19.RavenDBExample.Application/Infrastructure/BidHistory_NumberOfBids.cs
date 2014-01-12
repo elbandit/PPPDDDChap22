@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Raven.Client.Indexes;
 using Raven.Client.Document;
 using Raven.Abstractions.Indexing;

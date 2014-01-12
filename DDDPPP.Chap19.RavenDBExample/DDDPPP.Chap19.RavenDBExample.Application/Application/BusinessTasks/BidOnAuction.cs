@@ -18,7 +18,10 @@ namespace DDDPPP.Chap19.RavenDBExample.Application.Application.BusinessTasks
         private IDocumentSession _unitOfWork;
         private IClock _clock;
 
-        public BidOnAuction(IAuctions auctions, IBidHistory bidHistory, IDocumentSession unitOfWork, IClock clock)
+        public BidOnAuction(IAuctions auctions, 
+                            IBidHistory bidHistory, 
+                            IDocumentSession unitOfWork, 
+                            IClock clock)
         {
             _auctions = auctions;
             _bidHistory = bidHistory;
