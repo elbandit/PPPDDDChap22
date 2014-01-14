@@ -4,11 +4,11 @@ using DDDPPP.Chap19.NHibernateExample.Application.Infrastructure;
 
 namespace DDDPPP.Chap19.NHibernateExample.Application.Model.Auction
 {
-    public class Bid : ValueObject<Bid>
+    public class WinningBid : ValueObject<WinningBid>
     {
-        private Bid() { }
+        private WinningBid() { }
 
-        public Bid(Guid bidder, Money maximumBid, Money bid, DateTime timeOfBid)
+        public WinningBid(Guid bidder, Money maximumBid, Money bid, DateTime timeOfBid)
         {
             if (bidder == Guid.Empty)
                 throw new ArgumentNullException("Bidder cannot be null");
@@ -30,10 +30,10 @@ namespace DDDPPP.Chap19.NHibernateExample.Application.Model.Auction
         public DateTime TimeOfBid { get; private set; }
         public Price CurrentAuctionPrice { get; private set; }
 
-        public Bid RaiseMaximumBidTo(Money newAmount)
+        public WinningBid RaiseMaximumBidTo(Money newAmount)
         {
             if (newAmount.IsGreaterThan(MaximumBid))
-                return new Bid(Bidder, newAmount, CurrentAuctionPrice.Amount, DateTime.Now);
+                return new WinningBid(Bidder, newAmount, CurrentAuctionPrice.Amount, DateTime.Now);
             else
                 throw new ApplicationException("Maximum bid increase must be larger than current maximum bid.");
         }

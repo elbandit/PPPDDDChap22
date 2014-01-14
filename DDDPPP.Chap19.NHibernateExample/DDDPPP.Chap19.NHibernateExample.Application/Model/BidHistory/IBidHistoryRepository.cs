@@ -5,6 +5,6 @@ namespace DDDPPP.Chap19.NHibernateExample.Application.Model.BidHistory
     public interface IBidHistoryRepository
     {
         int NoOfBidsFor(Guid autionId);
-        void Add(BidEvent bid);
+        void Add(Bid bid);
     }
 }

@@ -16,7 +16,7 @@
 
     <property name="EndsAt" column="AuctionEnds" not-null="true"/>
   
-    <component name="CurrentWinningBid" class="Bid">
+    <component name="CurrentWinningBid" class="WinningBid">
 
       <property name="Bidder" column="BidderMemberId" not-null="false"/>
                    

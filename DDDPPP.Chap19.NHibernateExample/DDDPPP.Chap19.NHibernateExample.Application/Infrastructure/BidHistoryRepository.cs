@@ -23,7 +23,7 @@ namespace DDDPPP.Chap19.NHibernateExample.Application.Infrastructure
             return Convert.ToInt32(result);                                                
         }
 
-        public void Add(BidEvent bid)
+        public void Add(Bid bid)
         {                       
             _session.Save(bid);
         }

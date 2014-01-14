@@ -1,15 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using DDDPPP.Chap19.NHibernateExample.Application.Model.Auction;
 using DDDPPP.Chap19.NHibernateExample.Application.Infrastructure;
 
 namespace DDDPPP.Chap19.NHibernateExample.Application.Model.BidHistory
 {
-    public class BidEvent : Entity
+    public class Bid : ValueObject<Bid>
     {
-        private BidEvent()
+        private Bid()
         { }
 
-        public BidEvent(Guid auctionId, Guid bidderId, Money amountBid, DateTime timeOfBid)
+        public Bid(Guid auctionId, Guid bidderId, Money amountBid, DateTime timeOfBid)
         {
             if (auctionId == Guid.Empty)
                 throw new ArgumentNullException("Auction Id cannot be null");
@@ -33,6 +34,11 @@ namespace DDDPPP.Chap19.NHibernateExample.Application.Model.BidHistory
         public Guid Bidder { get; private set; }
         public Money AmountBid {get; private set;}
         public DateTime TimeOfBid { get; private set; }
-        public Guid Id { get; private set; }
+        private Guid Id { get; set; }
+
+        protected override IEnumerable<object> GetAttributesToIncludeInEqualityCheck()
+        {
+            return new List<Object>() { Bidder, AuctionId, TimeOfBid, AmountBid };
+        }
     }
 }

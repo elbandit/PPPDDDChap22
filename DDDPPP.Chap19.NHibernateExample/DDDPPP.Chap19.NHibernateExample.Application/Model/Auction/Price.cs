@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using DDDPPP.Chap19.NHibernateExample.Application.Infrastructure;
-using NHibernate.Hql.Ast.ANTLR.Tree;
-using NHibernate.Mapping;
 
 namespace DDDPPP.Chap19.NHibernateExample.Application.Model.Auction
 {

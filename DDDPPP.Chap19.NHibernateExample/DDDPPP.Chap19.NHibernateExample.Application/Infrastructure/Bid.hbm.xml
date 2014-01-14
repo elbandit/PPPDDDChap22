@@ -3,12 +3,12 @@
     namespace="DDDPPP.Chap19.NHibernateExample.Application.Model.BidHistory"
         assembly="DDDPPP.Chap19.NHibernateExample.Application">
 
-  <class name="BidEvent" table="BidHistory" lazy="false" >
+  <class name="Bid" table="BidHistory" lazy="false" >
 
     <id name="Id" column="Id" type="Guid">
       <generator class="guid"/>
     </id>
-
+    
     <property name="AuctionId" column="AuctionId" not-null="false"/>
     <property name="Bidder" column="BidderId" not-null="false"/>
 
