@@ -9,14 +9,19 @@ namespace DDDPPP.Chap19.NHibernateExample.Application.Model.Auction
         private Auction() { }
 
         public Auction(Guid id, Money startingPrice, DateTime endsAt)
-        {             
+        {
+            if (id == Guid.Empty)
+                throw new ArgumentNullException("Auction Id cannot be null");
+
+            if (startingPrice == null)
+                throw new ArgumentNullException("Starting Price cannot be null");
+
+            if (endsAt == DateTime.MinValue)
+                throw new ArgumentNullException("EndsAt must have a value");
+
             Id = id;
             StartingPrice = startingPrice;
-            EndsAt = endsAt;
-
-            //if (DateTime.Now > EndsAt)
-                // throw exception
-               
+            EndsAt = endsAt;              
         }
 
         public Guid Id { get; private set; }

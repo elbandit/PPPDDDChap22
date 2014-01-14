@@ -12,6 +12,9 @@ namespace DDDPPP.Chap19.NHibernateExample.Application.Model.Auction
 
         public Price(Money amount)
         {
+            if (amount == null)
+                throw new ArgumentNullException("Amount cannot be null");
+
             Amount = amount;
         }
 

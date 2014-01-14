@@ -9,7 +9,14 @@ namespace DDDPPP.Chap19.NHibernateExample.Application.Model.Auction
     {
         public Offer(Guid bidderId, Money maximumBid, DateTime timeOfOffer)
         {
-            if (bidderId == null)
+            if (bidderId == Guid.Empty)
+                throw new ArgumentNullException("BidderId cannot be null");
+
+            if (maximumBid == null)
+                throw new ArgumentNullException("MaximumBid cannot be null");
+
+            if (timeOfOffer == DateTime.MinValue)
+                throw new ArgumentNullException("Time of Offer must have a value");
 
             Bidder = bidderId;
             MaximumBid = maximumBid;
