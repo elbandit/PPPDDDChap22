@@ -5,11 +5,11 @@ using NHibernate;
 
 namespace DDDPPP.Chap19.NHibernateExample.Application.Infrastructure
 {
-    public class BidHistory : IBidHistory
+    public class BidHistoryRepository : IBidHistoryRepository
     {
         private readonly ISession _session;
 
-        public BidHistory(ISession session)
+        public BidHistoryRepository(ISession session)
         {
             _session = session;
         }

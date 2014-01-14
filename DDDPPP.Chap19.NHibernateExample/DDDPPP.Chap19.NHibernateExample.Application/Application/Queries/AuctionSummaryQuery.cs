@@ -10,9 +10,9 @@ namespace DDDPPP.Chap19.NHibernateExample.Application.Application.Queries
     public class AuctionSummaryQuery
     {
         private readonly ISession _session;
-        private IBidHistory _bidHistory;
+        private IBidHistoryRepository _bidHistory;
 
-        public AuctionSummaryQuery(ISession session, IBidHistory bidHistory)
+        public AuctionSummaryQuery(ISession session, IBidHistoryRepository bidHistory)
         {
             _session = session;
             _bidHistory = bidHistory;

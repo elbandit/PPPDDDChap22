@@ -22,8 +22,8 @@ namespace DDDPPP.Chap19.NHibernateExample.Application
 
             ObjectFactory.Initialize(structureMapConfig =>
             {
-                structureMapConfig.For<IAuctionRepository>().Use<Auctions>();
-                structureMapConfig.For<IBidHistory>().Use<Infrastructure.BidHistory>();
+                structureMapConfig.For<IAuctionRepository>().Use<AuctionRepository>();
+                structureMapConfig.For<IBidHistoryRepository>().Use<Infrastructure.BidHistoryRepository>();
                 structureMapConfig.For<IClock>().Use<SystemClock>();
 
                 structureMapConfig.For<ISessionFactory>().Use(sessionFactory);

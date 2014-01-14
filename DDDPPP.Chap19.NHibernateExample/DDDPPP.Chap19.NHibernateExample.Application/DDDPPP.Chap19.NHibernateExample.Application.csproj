@@ -58,8 +58,8 @@
     <Compile Include="Application\Queries\BidHistoryQuery.cs" />
     <Compile Include="Application\Queries\BidInformation.cs" />
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="Infrastructure\Auctions.cs" />
-    <Compile Include="Infrastructure\BidHistory.cs" />
+    <Compile Include="Infrastructure\AuctionRepository.cs" />
+    <Compile Include="Infrastructure\BidHistoryRepository.cs" />
     <Compile Include="Infrastructure\DomainEvents.cs" />
     <Compile Include="Infrastructure\Entity.cs" />
     <Compile Include="Infrastructure\ValueObject.cs" />
@@ -77,7 +77,7 @@
     <Compile Include="Model\Auction\Price.cs" />
     <Compile Include="Infrastructure\SystemClock.cs" />
     <Compile Include="Model\BidHistory\BidEvent.cs" />
-    <Compile Include="Model\BidHistory\IBidHistory.cs" />
+    <Compile Include="Model\BidHistory\IBidHistoryRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

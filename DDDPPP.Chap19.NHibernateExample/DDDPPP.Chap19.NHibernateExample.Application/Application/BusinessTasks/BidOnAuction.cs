@@ -10,11 +10,11 @@ namespace DDDPPP.Chap19.NHibernateExample.Application.Application.BusinessTasks
     public class BidOnAuction
     {
         private IAuctionRepository _auctions;
-        private IBidHistory _bidHistory;
+        private IBidHistoryRepository _bidHistory;
         private ISession _unitOfWork;
         private IClock _clock;
 
-        public BidOnAuction(IAuctionRepository auctions, IBidHistory bidHistory, ISession unitOfWork, IClock clock)
+        public BidOnAuction(IAuctionRepository auctions, IBidHistoryRepository bidHistory, ISession unitOfWork, IClock clock)
         {
             _auctions = auctions;
             _bidHistory = bidHistory;
