@@ -50,10 +50,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application\BusinessTasks\NewAuctionDetails.cs" />
-    <Compile Include="Application\BusinessTasks\BidOnAuction.cs" />
+    <Compile Include="Application\BusinessUseCases\NewAuctionDetails.cs" />
+    <Compile Include="Application\BusinessUseCases\BidOnAuction.cs" />
     <Compile Include="Application\Queries\AuctionSummaryQuery.cs" />
-    <Compile Include="Application\BusinessTasks\CreateAuction.cs" />
+    <Compile Include="Application\BusinessUseCases\CreateAuctionRequest.cs" />
     <Compile Include="Application\Queries\AuctionStatus.cs" />
     <Compile Include="Application\Queries\BidHistoryQuery.cs" />
     <Compile Include="Application\Queries\BidInformation.cs" />

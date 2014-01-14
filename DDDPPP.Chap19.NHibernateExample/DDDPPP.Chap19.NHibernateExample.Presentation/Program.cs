@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using DDDPPP.Chap19.NHibernateExample.Application.Application.BusinessTasks;
+using DDDPPP.Chap19.NHibernateExample.Application.Application.BusinessUseCases;
 using DDDPPP.Chap19.NHibernateExample.Application.Application.Queries;
 using DDDPPP.Chap19.NHibernateExample.Application;
-using DDDPPP.Chap19.NHibernateExample.Application.Model.Auction;
 using StructureMap;
 
 namespace DDDPPP.Chap19.NHibernateExample.Presentation
@@ -66,7 +65,7 @@ namespace DDDPPP.Chap19.NHibernateExample.Presentation
 
        public static Guid CreateAution()
        {
-           var createAuction = ObjectFactory.GetInstance<CreateAuction>();
+           var createAuction = ObjectFactory.GetInstance<CreateAuctionRequest>();
 
            var auctionCreation = new AuctionCreation();
 

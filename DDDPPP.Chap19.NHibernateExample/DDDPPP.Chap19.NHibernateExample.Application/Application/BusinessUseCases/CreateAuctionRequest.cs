@@ -2,14 +2,14 @@
 using DDDPPP.Chap19.NHibernateExample.Application.Model.Auction;
 using NHibernate;
 
-namespace DDDPPP.Chap19.NHibernateExample.Application.Application.BusinessTasks
+namespace DDDPPP.Chap19.NHibernateExample.Application.Application.BusinessUseCases
 {
-    public class CreateAuction
+    public class CreateAuctionRequest
     {
         private IAuctionRepository _auctions;
         private ISession _unitOfWork;
 
-        public CreateAuction(IAuctionRepository auctions,ISession unitOfWork)
+        public CreateAuctionRequest(IAuctionRepository auctions,ISession unitOfWork)
         {
             _auctions = auctions;            
             _unitOfWork = unitOfWork;

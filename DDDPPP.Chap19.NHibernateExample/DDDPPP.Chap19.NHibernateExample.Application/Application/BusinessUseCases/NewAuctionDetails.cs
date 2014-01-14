@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DDDPPP.Chap19.NHibernateExample.Application.Application.BusinessTasks
+namespace DDDPPP.Chap19.NHibernateExample.Application.Application.BusinessUseCases
 {
     public class AuctionCreation
     {

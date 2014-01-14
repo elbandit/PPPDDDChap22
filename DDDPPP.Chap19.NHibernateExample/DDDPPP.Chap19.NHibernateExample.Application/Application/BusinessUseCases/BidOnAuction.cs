@@ -5,7 +5,7 @@ using DDDPPP.Chap19.NHibernateExample.Application.Model.BidHistory;
 using NHibernate;
 using DDDPPP.Chap19.NHibernateExample.Application.Infrastructure;
 
-namespace DDDPPP.Chap19.NHibernateExample.Application.Application.BusinessTasks
+namespace DDDPPP.Chap19.NHibernateExample.Application.Application.BusinessUseCases
 {
     public class BidOnAuction
     {
