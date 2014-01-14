@@ -44,6 +44,11 @@ namespace DDDPPP.Chap19.NHibernateExample.Application.Model.Auction
             return this.Value > money.Value || this.Equals(money);
         }
 
+        public bool IsLessThanOrEqualTo(Money money)
+        {
+            return this.Value < money.Value || this.Equals(money);
+        }
+
         public override string ToString()
         {
             return string.Format("{0}", Value);
