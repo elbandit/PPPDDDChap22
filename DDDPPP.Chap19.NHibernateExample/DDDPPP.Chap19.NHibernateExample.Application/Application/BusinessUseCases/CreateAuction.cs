@@ -4,14 +4,14 @@ using NHibernate;
 
 namespace DDDPPP.Chap19.NHibernateExample.Application.Application.BusinessUseCases
 {
-    public class CreateAuctionRequest
+    public class CreateAuction
     {
-        private IAuctionRepository _auctions;
+        private IAuctionRepository _auctionRepository;
         private ISession _unitOfWork;
 
-        public CreateAuctionRequest(IAuctionRepository auctions,ISession unitOfWork)
+        public CreateAuction(IAuctionRepository auctionRepository,ISession unitOfWork)
         {
-            _auctions = auctions;            
+            _auctionRepository = auctionRepository;            
             _unitOfWork = unitOfWork;
         }
 
@@ -22,7 +22,7 @@ namespace DDDPPP.Chap19.NHibernateExample.Application.Application.BusinessUseCas
 
             using (ITransaction transaction = _unitOfWork.BeginTransaction())
             {
-                _auctions.Add(new Auction(auctionId, startingPrice, command.EndsAt));
+                _auctionRepository.Add(new Auction(auctionId, startingPrice, command.EndsAt));
 
                 transaction.Commit();
             }

@@ -65,7 +65,7 @@ namespace DDDPPP.Chap19.NHibernateExample.Presentation
 
        public static Guid CreateAution()
        {
-           var createAuction = ObjectFactory.GetInstance<CreateAuctionRequest>();
+           var createAuction = ObjectFactory.GetInstance<CreateAuction>();
 
            var auctionCreation = new AuctionCreation();
 
