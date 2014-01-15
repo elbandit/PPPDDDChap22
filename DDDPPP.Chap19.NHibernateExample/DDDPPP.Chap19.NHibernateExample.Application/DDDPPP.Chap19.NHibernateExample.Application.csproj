@@ -52,7 +52,7 @@
   <ItemGroup>
     <Compile Include="Application\BusinessUseCases\NewAuctionRequest.cs" />
     <Compile Include="Application\BusinessUseCases\BidOnAuction.cs" />
-    <Compile Include="Application\Queries\AuctionSummaryQuery.cs" />
+    <Compile Include="Application\Queries\AuctionStatusQuery.cs" />
     <Compile Include="Application\BusinessUseCases\CreateAuction.cs" />
     <Compile Include="Application\Queries\AuctionStatus.cs" />
     <Compile Include="Application\Queries\BidHistoryQuery.cs" />

@@ -86,13 +86,13 @@ namespace DDDPPP.Chap19.NHibernateExample.Presentation
 
         public static void PrintStatusOfAuctionBy(Guid auctionId)
         {
-            var auctionSummaryQuery = ObjectFactory.GetInstance<AuctionSummaryQuery>();
+            var auctionSummaryQuery = ObjectFactory.GetInstance<AuctionStatusQuery>();
             var status = auctionSummaryQuery.AuctionStatus(auctionId);
            
             Console.WriteLine("No Of Bids: " + status.NumberOfBids);
             Console.WriteLine("Current Bid: " + status.CurrentPrice.ToString("##.##"));
             Console.WriteLine("Winning Bidder: " + FindNameOfBidderWith(status.WinningBidderId));
-            Console.WriteLine("Time Remaining: " + status.TimeRemaining());            
+            Console.WriteLine("Time Remaining: " + status.TimeRemaining);            
             Console.WriteLine();
         }
 
