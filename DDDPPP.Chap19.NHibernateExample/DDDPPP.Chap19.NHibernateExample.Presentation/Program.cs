@@ -22,45 +22,12 @@ namespace DDDPPP.Chap19.NHibernateExample.Presentation
             members.Add(memberIdB, "Rob");
 
             var auctionId = CreateAution();
-            PrintStatusOfAuctionBy(auctionId);
-            PrintBidHistoryOf(auctionId);
             
-            // Bid
             Bid(auctionId, memberIdA, 10m);
-            PrintStatusOfAuctionBy(auctionId);
-            PrintBidHistoryOf(auctionId);
-            Console.WriteLine("Hit any key to continue");
-            Console.ReadLine();
-
-            // Bid
             Bid(auctionId, memberIdB, 1.49m);
-            PrintStatusOfAuctionBy(auctionId);
-            PrintBidHistoryOf(auctionId);
-            Console.WriteLine("Hit any key to continue");
-            Console.ReadLine();
-
-            // Bid
             Bid(auctionId, memberIdB, 10.01m);
-            PrintStatusOfAuctionBy(auctionId);
-            PrintBidHistoryOf(auctionId);
-            Console.WriteLine("Hit any key to continue");
-            Console.ReadLine();
-
-            // Bid
             Bid(auctionId, memberIdB, 12.00m);
-            PrintStatusOfAuctionBy(auctionId);
-            PrintBidHistoryOf(auctionId);
-            Console.WriteLine("Hit any key to continue");
-            Console.ReadLine();
-
-            // Bid
             Bid(auctionId, memberIdA, 12.00m);
-            PrintStatusOfAuctionBy(auctionId);
-            PrintBidHistoryOf(auctionId);
-            Console.WriteLine("Hit any key to continue");
-            Console.ReadLine();
-            
-            Console.ReadLine();
         }
 
        public static Guid CreateAution()
@@ -82,6 +49,11 @@ namespace DDDPPP.Chap19.NHibernateExample.Presentation
            var bidOnAuction = ObjectFactory.GetInstance<BidOnAuction>();
 
            bidOnAuction.Bid(auctionId, memberId, amount);
+
+           PrintStatusOfAuctionBy(auctionId);
+           PrintBidHistoryOf(auctionId);
+           Console.WriteLine("Hit any key to continue");
+           Console.ReadLine();
        }
 
         public static void PrintStatusOfAuctionBy(Guid auctionId)
