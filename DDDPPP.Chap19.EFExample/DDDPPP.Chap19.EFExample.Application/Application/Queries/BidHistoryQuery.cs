@@ -7,9 +7,9 @@ namespace DDDPPP.Chap19.EFExample.Application.Application.Queries
 {
     public class BidHistoryQuery
     {
-        private readonly IBidHistory _bidHistory;
+        private readonly IBidHistoryRepository _bidHistory;
 
-        public BidHistoryQuery(IBidHistory bidHistory)
+        public BidHistoryQuery(IBidHistoryRepository bidHistory)
         {
             _bidHistory = bidHistory;         
         }
@@ -21,7 +21,7 @@ namespace DDDPPP.Chap19.EFExample.Application.Application.Queries
             return Convert(bidHistory.ShowAllBids());
         }
 
-        public IEnumerable<BidInformation> Convert(IEnumerable<BidEvent> bids)
+        public IEnumerable<BidInformation> Convert(IEnumerable<Bid> bids)
         {
             var bidInfo = new List<BidInformation>();
 

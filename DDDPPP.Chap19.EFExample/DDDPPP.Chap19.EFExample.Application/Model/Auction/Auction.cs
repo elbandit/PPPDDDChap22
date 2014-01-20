@@ -23,7 +23,7 @@ namespace DDDPPP.Chap19.EFExample.Application.Model.Auction
             this.EndsAt = snapShot.EndsAt;
 
             if (snapShot.CurrentBid != null)                          
-                CurrentWinningBid = Bid.CreateFrom(snapShot.CurrentBid);            
+                CurrentWinningBid = WinningBid.CreateFrom(snapShot.CurrentBid);            
         }
 
         public static Auction CreateFrom(AuctionSnapShot snapShot)
@@ -33,7 +33,7 @@ namespace DDDPPP.Chap19.EFExample.Application.Model.Auction
 
         private Guid Id { get; set; }
         private Money StartingPrice { get; set; }
-        private Bid CurrentWinningBid { get; set; }
+        private WinningBid CurrentWinningBid { get; set; }
         private DateTime EndsAt { get; set; }
 
         public AuctionSnapShot GetSnapShot()
@@ -90,10 +90,10 @@ namespace DDDPPP.Chap19.EFExample.Application.Model.Auction
         private void PlaceABidForTheFirst(Offer offer)
         {
             if (offer.MaximumBid.IsGreaterThanOrEqualTo(StartingPrice))
-                Place(new Bid(offer.Bidder, offer.MaximumBid, StartingPrice, offer.TimeOfOffer));
+                Place(new WinningBid(offer.Bidder, offer.MaximumBid, StartingPrice, offer.TimeOfOffer));
         }
 
-        private void Place(Bid newBid)
+        private void Place(WinningBid newBid)
         {
             if (!FirstOffer() && CurrentWinningBid.WasMadeBy(newBid.Bidder))
                 DomainEvents.Raise(new OutBid(Id, CurrentWinningBid.Bidder, newBid.CurrentAuctionPrice.Amount));

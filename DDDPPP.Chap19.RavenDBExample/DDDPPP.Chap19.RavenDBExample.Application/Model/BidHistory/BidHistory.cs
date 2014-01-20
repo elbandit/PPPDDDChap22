@@ -8,14 +8,14 @@ namespace DDDPPP.Chap19.RavenDBExample.Application.Model.BidHistory
 {
     public class BidHistory
     {
-        private IEnumerable<BidEvent> _bids;
+        private IEnumerable<Bid> _bids;
 
-        public BidHistory(IEnumerable<BidEvent> bids)
+        public BidHistory(IEnumerable<Bid> bids)
         {
             _bids = bids;
         }
 
-        public IEnumerable<BidEvent> ShowAllBids()
+        public IEnumerable<Bid> ShowAllBids()
         {
             var bids = _bids.OrderByDescending(x => x.AmountBid.Value).ThenBy(x => x.TimeOfBid);
 

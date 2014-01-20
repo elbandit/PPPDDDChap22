@@ -8,13 +8,13 @@ namespace DDDPPP.Chap19.EFExample.Application.Model.Auction
 {
     public class AutomaticBidder
     {
-        public IEnumerable<Bid> GenerateNextSequenceOfBidsAfter(Offer offer, Bid currentWinningBid)
+        public IEnumerable<WinningBid> GenerateNextSequenceOfBidsAfter(Offer offer, WinningBid currentWinningBid)
         {
-            var bids = new List<Bid>();
+            var bids = new List<WinningBid>();
 
             if (currentWinningBid.MaximumBid.IsGreaterThanOrEqualTo(offer.MaximumBid))
             {
-                var bidFromOffer = new Bid(offer.Bidder, offer.MaximumBid, offer.MaximumBid, offer.TimeOfOffer);
+                var bidFromOffer = new WinningBid(offer.Bidder, offer.MaximumBid, offer.MaximumBid, offer.TimeOfOffer);
                 bids.Add(bidFromOffer);
 
                 bids.Add(CalculateNextBid(bidFromOffer, new Offer(currentWinningBid.Bidder, currentWinningBid.MaximumBid, currentWinningBid.TimeOfBid)));
@@ -23,26 +23,26 @@ namespace DDDPPP.Chap19.EFExample.Application.Model.Auction
             {
                 if (currentWinningBid.HasNotReachedMaximumBid())
                 {
-                    var currentBiddersLastBid = new Bid(currentWinningBid.Bidder, currentWinningBid.MaximumBid, currentWinningBid.MaximumBid, currentWinningBid.TimeOfBid);
+                    var currentBiddersLastBid = new WinningBid(currentWinningBid.Bidder, currentWinningBid.MaximumBid, currentWinningBid.MaximumBid, currentWinningBid.TimeOfBid);
                     bids.Add(currentBiddersLastBid);
 
                     bids.Add(CalculateNextBid(currentBiddersLastBid, offer));
                 }
                 else
-                    bids.Add(new Bid(offer.Bidder, currentWinningBid.CurrentAuctionPrice.BidIncrement(), offer.MaximumBid, offer.TimeOfOffer));
+                    bids.Add(new WinningBid(offer.Bidder, currentWinningBid.CurrentAuctionPrice.BidIncrement(), offer.MaximumBid, offer.TimeOfOffer));
             }
 
             return bids;
         }
 
-        private Bid CalculateNextBid(Bid winningbid, Offer offer)
+        private WinningBid CalculateNextBid(WinningBid winningbid, Offer offer)
         {
-            Bid bid;
+            WinningBid bid;
 
             if (winningbid.CanBeExceededBy(offer.MaximumBid))
-                bid = new Bid(offer.Bidder, offer.MaximumBid, winningbid.CurrentAuctionPrice.BidIncrement(), offer.TimeOfOffer);
+                bid = new WinningBid(offer.Bidder, offer.MaximumBid, winningbid.CurrentAuctionPrice.BidIncrement(), offer.TimeOfOffer);
             else
-                bid = new Bid(offer.Bidder, offer.MaximumBid, offer.MaximumBid, offer.TimeOfOffer);
+                bid = new WinningBid(offer.Bidder, offer.MaximumBid, offer.MaximumBid, offer.TimeOfOffer);
 
             return bid;
         }   

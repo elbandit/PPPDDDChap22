@@ -9,18 +9,11 @@ namespace DDDPPP.Chap19.EFExample.Application.Application.Queries
 {
     public class AuctionStatus
     {
-        public Guid Id { get; set; }       
+        public Guid Id { get; set; }
         public decimal CurrentPrice { get; set; }
         public DateTime AuctionEnds { get; set; }
         public Guid WinningBidderId { get; set; }
         public int NumberOfBids { get; set; }
-
-        public TimeSpan TimeRemaining()
-        {
-            if (DateTime.Now < AuctionEnds)
-                return AuctionEnds.Subtract(DateTime.Now);
-            else
-                return new TimeSpan();
-        }
+        public TimeSpan TimeRemaining { get; set; }
     }
 }

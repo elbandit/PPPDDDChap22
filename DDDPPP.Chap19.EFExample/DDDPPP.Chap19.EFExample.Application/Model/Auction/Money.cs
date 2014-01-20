@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using DDDPPP.Chap19.EFExample.Application.Infrastructure;
 
 namespace DDDPPP.Chap19.EFExample.Application.Model.Auction
 {
-    public class Money
+    public class Money : ValueObject<Money>
     {
-        protected decimal Value { get; set; }
-        // TODO: If we need to change currency we can do nice and easily here
+        public decimal Value { get; private set; }
 
         public Money()
             : this(0m)
@@ -18,10 +16,21 @@ namespace DDDPPP.Chap19.EFExample.Application.Model.Auction
 
         public Money(decimal value)
         {
+            ThrowExceptionIfNotValid(value);
+
             Value = value;
         }
 
-        public Money add(Money money)
+        private void ThrowExceptionIfNotValid(decimal value)
+        {
+            if (value % 0.01m != 0)
+                throw new MoreThanTwoDecimalPlacesInMoneyValueException();
+
+            if (value < 0)
+                throw new MoneyCannotBeANegativeValueException();
+        }
+
+        public Money Add(Money money)
         {
             return new Money(Value + money.Value);
         }
@@ -36,27 +45,26 @@ namespace DDDPPP.Chap19.EFExample.Application.Model.Auction
             return this.Value > money.Value || this.Equals(money);
         }
 
-        public override bool Equals(System.Object obj)
+        public bool IsLessThanOrEqualTo(Money money)
         {
-            if (obj == null) return false;
-            if (obj.GetType() != this.GetType()) return false;
-
-            return ((Money)obj).Value == Value;
-        }
-
-        public override int GetHashCode()
-        {
-            return Value.GetHashCode();
+            return this.Value < money.Value || this.Equals(money);
         }
 
         public override string ToString()
         {
-            return string.Format("£{0}", Value);
+            return string.Format("{0}", Value);
         }
 
         public MoneySnapshot GetSnapshot()
-        { 
-            return new MoneySnapshot() {Value = this.Value};
+        {
+            return new MoneySnapshot() { Value = this.Value };
+        }
+
+        // Equality Implementtion
+
+        protected override IEnumerable<object> GetAttributesToIncludeInEqualityCheck()
+        {
+            return new List<Object>() { Value };
         }
     }
 }

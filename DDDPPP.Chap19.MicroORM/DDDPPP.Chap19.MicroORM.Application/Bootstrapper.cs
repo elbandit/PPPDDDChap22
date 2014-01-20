@@ -16,8 +16,8 @@ namespace DDDPPP.Chap19.MicroORM.Application
         {                      
             ObjectFactory.Initialize(config =>
             {
-                config.For<IAuctions>().Use<Auctions>();
-                config.For<IBidHistory>().Use<BidEventHistory>();
+                config.For<IAuctionRepository>().Use<AuctionRepository>();
+                config.For<IBidHistoryRepository>().Use<BidHistoryRepository>();
                 config.For<IClock>().Use<SystemClock>();
 
                 config.For<IUnitOfWork>()

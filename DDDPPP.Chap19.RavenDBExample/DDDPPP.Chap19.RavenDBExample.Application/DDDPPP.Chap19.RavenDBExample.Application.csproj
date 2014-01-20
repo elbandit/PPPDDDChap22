@@ -51,33 +51,36 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application\BusinessTasks\BidOnAuction.cs" />
-    <Compile Include="Application\BusinessTasks\CreateAuction.cs" />
-    <Compile Include="Application\BusinessTasks\NewAuctionDetails.cs" />
+    <Compile Include="Application\BusinessUseCases\BidOnAuction.cs" />
+    <Compile Include="Application\BusinessUseCases\CreateAuction.cs" />
+    <Compile Include="Application\BusinessUseCases\NewAuctionRequest.cs" />
     <Compile Include="Application\Queries\AuctionStatus.cs" />
-    <Compile Include="Application\Queries\AuctionSummaryQuery.cs" />
+    <Compile Include="Application\Queries\AuctionStatusQuery.cs" />
     <Compile Include="Application\Queries\BidHistoryQuery.cs" />
     <Compile Include="Application\Queries\BidInformation.cs" />
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="Infrastructure\Auctions.cs" />
+    <Compile Include="Infrastructure\AuctionRepository.cs" />
     <Compile Include="Infrastructure\BidHistory_NumberOfBids.cs" />
-    <Compile Include="Infrastructure\BidHistory.cs" />
+    <Compile Include="Infrastructure\BidHistoryRepository.cs" />
     <Compile Include="Infrastructure\DomainEvents.cs" />
+    <Compile Include="Infrastructure\Entity.cs" />
+    <Compile Include="Infrastructure\ValueObject.cs" />
     <Compile Include="Model\Auction\Auction.cs" />
     <Compile Include="Model\Auction\AutomaticBidder.cs" />
-    <Compile Include="Model\Auction\Bidder.cs" />
     <Compile Include="Model\Auction\BidPlaced.cs" />
     <Compile Include="Infrastructure\IClock.cs" />
     <Compile Include="Model\Auction\Money.cs" />
+    <Compile Include="Model\Auction\MoneyCannotBeANegativeValueException.cs" />
+    <Compile Include="Model\Auction\MoreThanTwoDecimalPlacesInMoneyValueException.cs" />
     <Compile Include="Model\Auction\Offer.cs" />
     <Compile Include="Model\Auction\OutBid.cs" />
     <Compile Include="Model\Auction\Price.cs" />
     <Compile Include="Infrastructure\SystemClock.cs" />
-    <Compile Include="Model\BidHistory\BidEvent.cs" />
-    <Compile Include="Model\Auction\IAuctions.cs" />
-    <Compile Include="Model\Auction\Bid.cs" />
+    <Compile Include="Model\BidHistory\Bid.cs" />
+    <Compile Include="Model\Auction\IAuctionRepository.cs" />
+    <Compile Include="Model\Auction\WinningBid.cs" />
     <Compile Include="Model\BidHistory\BidHistory.cs" />
-    <Compile Include="Model\BidHistory\IBidHistory.cs" />
+    <Compile Include="Model\BidHistory\IBidHistoryRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

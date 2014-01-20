@@ -21,12 +21,12 @@ namespace DDDPPP.Chap19.NHibernateExample.Application.Model.Auction
             AuctionId = auctionId;
             Bidder = bidderId;
             AmountBid = amountBid;
-            TimeOfMemberBid = timeOfBid;
+            TimeOfBid = timeOfBid;
         }
 
         public Guid AuctionId { get; private set; }
         public Guid Bidder { get; private set; }
         public Money AmountBid { get; private set; }
-        public DateTime TimeOfMemberBid { get; private set; }        
+        public DateTime TimeOfBid { get; private set; }        
     }
 }

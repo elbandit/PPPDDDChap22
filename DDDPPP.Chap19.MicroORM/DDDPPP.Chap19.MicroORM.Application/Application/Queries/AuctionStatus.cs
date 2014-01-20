@@ -14,13 +14,6 @@ namespace DDDPPP.Chap19.MicroORM.Application.Application.Queries
         public DateTime AuctionEnds { get; set; }
         public Guid WinningBidderId { get; set; }
         public int NumberOfBids { get; set; }
-
-        public TimeSpan TimeRemaining()
-        {
-            if (DateTime.Now < AuctionEnds)
-                return AuctionEnds.Subtract(DateTime.Now);
-            else
-                return new TimeSpan();
-        }
+        public TimeSpan TimeRemaining { get; set; }
     }
 }

@@ -9,7 +9,7 @@ using DDDPPP.Chap19.RavenDBExample.Application.Application;
 
 namespace DDDPPP.Chap19.RavenDBExample.Application.Infrastructure
 {
-    public class BidHistory_NumberOfBids : AbstractIndexCreationTask<BidEvent, BidHistory_NumberOfBids.ReduceResult>
+    public class BidHistory_NumberOfBids : AbstractIndexCreationTask<Bid, BidHistory_NumberOfBids.ReduceResult>
     {
         public class ReduceResult
         {

@@ -25,8 +25,8 @@ namespace DDDPPP.Chap19.RavenDBExample.Application
 
             ObjectFactory.Initialize(config =>
             {
-                config.For<IAuctions>().Use<Auctions>();
-                config.For<IBidHistory>().Use<Infrastructure.BidHistory>();
+                config.For<IAuctionRepository>().Use<AuctionRepository>();
+                config.For<IBidHistoryRepository>().Use<Infrastructure.BidHistoryRepository>();
                 config.For<IClock>().Use<SystemClock>();
 
                 config.For<IDocumentStore>().Use(documentStore);

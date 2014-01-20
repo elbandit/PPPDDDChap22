@@ -54,7 +54,7 @@ namespace DDDPPP.Chap19.NHibernateExample.Application.Application.BusinessUseCas
         {
             return (BidPlaced e) =>
             {               
-                var bidEvent = new Bid(e.AuctionId, e.Bidder, e.AmountBid, e.TimeOfMemberBid);
+                var bidEvent = new Bid(e.AuctionId, e.Bidder, e.AmountBid, e.TimeOfBid);
               
                 _bidHistoryRepository.Add(bidEvent);
             };
