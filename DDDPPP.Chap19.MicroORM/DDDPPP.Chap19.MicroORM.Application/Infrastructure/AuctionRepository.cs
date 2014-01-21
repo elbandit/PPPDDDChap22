@@ -31,14 +31,8 @@ namespace DDDPPP.Chap19.MicroORM.Application.Infrastructure
         public void Save(Auction auction)
         {
             var snapshot = auction.GetSnapshot();
-
-            AuctionDTO auctionDTO;
-
-            using (var connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["AuctionDB"].ConnectionString))
-            {
-                auctionDTO = connection.Query<AuctionDTO>("Select * From Auctions Where Id = @Id", new { Id = snapshot.Id }).FirstOrDefault();
-            }
-
+            var auctionDTO = new AuctionDTO(); 
+           
             Map(auctionDTO, snapshot);
 
             _unitOfWork.RegisterAmended(auctionDTO, this);
