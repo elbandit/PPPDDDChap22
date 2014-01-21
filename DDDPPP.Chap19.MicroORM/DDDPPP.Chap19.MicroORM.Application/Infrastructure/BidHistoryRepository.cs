@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DDDPPP.Chap19.MicroORM.Application.Model.BidHistory;
 using DDDPPP.Chap19.MicroORM.Application.Model.Auction;
 using DDDPPP.Chap19.MicroORM.Application.Infrastructure.DataModel;
@@ -21,10 +19,7 @@ namespace DDDPPP.Chap19.MicroORM.Application.Infrastructure
         }
 
         public int NoOfBidsFor(Guid auctionId)
-        {            
-            // Sometimes the item page will show that there are 2 bids, yet there is only one bidder. 
-            // This happens when a member places more then one bid to increase their maximum bid amount. 
-            // For example, if you are the first bidder on an item and you place a second bid to increase your maximum bid amount, the item page would show the current high bid at the opening bid amount, but would show that two bids have been placed on this item.
+        {                        
             int count;
 
             using (var connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["AuctionDB"].ConnectionString))
@@ -39,7 +34,7 @@ namespace DDDPPP.Chap19.MicroORM.Application.Infrastructure
 
         public void Add(Bid bid)        
         {
-            var bidHistoryDTO = new BidHistoryDTO();
+            var bidHistoryDTO = new BidDTO();
 
             bidHistoryDTO.AuctionId = bid.AuctionId;
             bidHistoryDTO.Bid = bid.AmountBid.GetSnapshot().Value;
@@ -53,31 +48,30 @@ namespace DDDPPP.Chap19.MicroORM.Application.Infrastructure
 
         public BidHistory FindBy(Guid auctionId)
         {
-            IEnumerable<BidHistoryDTO> bids;
+            IEnumerable<BidDTO> bidDTOs;
 
             using (var connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["AuctionDB"].ConnectionString))
             {
-                bids = connection.Query<BidHistoryDTO>("Select * From BidHistory Where AuctionId = @Id", new { Id = auctionId });
+                bidDTOs = connection.Query<BidDTO>("Select * From BidHistory Where AuctionId = @Id", new { Id = auctionId });
             }
   
-            var bidds = new List<Bid>();
+            var bids = new List<Bid>();
 
-            foreach (var bid in bids)
+            foreach (var bid in bidDTOs)
             { 
-                bidds.Add(new Bid(bid.AuctionId, bid.BidderId, new Money(bid.Bid), bid.TimeOfBid));
+                bids.Add(new Bid(bid.AuctionId, bid.BidderId, new Money(bid.Bid), bid.TimeOfBid));
             }
 
-            return new BidHistory(bidds);
+            return new BidHistory(bids);
         }
-
 
         public void PersistCreationOf(IAggregateDataModel entity)
         {
-            var bidHistoryDTO = (BidHistoryDTO)entity;
+            var bidHistoryDTO = (BidDTO)entity;
 
             using (var connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["AuctionDB"].ConnectionString))
             {
-                var recordsUpdated = connection.Execute(@"                
+                connection.Execute(@"                
                     INSERT INTO [dbo].[BidHistory]
                            ([AuctionId]
                            ,[BidderId]
@@ -97,12 +91,7 @@ namespace DDDPPP.Chap19.MicroORM.Application.Infrastructure
                         Bid = bidHistoryDTO.Bid,
                         TimeOfBid = bidHistoryDTO.TimeOfBid,
                         AuctionId = bidHistoryDTO.AuctionId 
-                    });
-
-                if (recordsUpdated.Equals(1))
-                {
-                    // 1 rows inserted or throw concurrency exception
-                }               
+                    });            
             }
         }
 

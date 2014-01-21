@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 
-namespace DDDPPP.Chap19.MicroORM.Application.Infrastructure
+namespace DDDPPP.Chap19.EFExample.Application.Infrastructure
 {
     public abstract class Entity<TId>
     {

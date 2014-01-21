@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DDDPPP.Chap19.MicroORM.Application.Application.BusinessUseCases
+namespace DDDPPP.Chap19.EFExample.Application.Application.BusinessUseCases
 {
     public class NewAuctionRequest
     {

@@ -17,7 +17,7 @@ namespace DDDPPP.Chap19.RavenDBExample.Application.Application.BusinessUseCases
             _unitOfWork = unitOfWork;
         }
 
-        public Guid Create(AuctionCreation command)
+        public Guid Create(NewAuctionRequest command)
         {
             var auctionId = Guid.NewGuid();
             var startingPrice = new Money(command.StartingPrice);

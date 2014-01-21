@@ -25,24 +25,24 @@ namespace DDDPPP.Chap19.EFExample.Application.Application.Queries
         {            
             var auction = _auctions.FindBy(auctionId);
 
-            var snapshot = auction.GetSnapShot();
+            var snapshot = auction.GetSnapshot();
 
             return ConvertToStatus(snapshot);
         }
 
-        public AuctionStatus ConvertToStatus(AuctionSnapShot snapShot)
+        public AuctionStatus ConvertToStatus(AuctionSnapshot snapshot)
         {
             var status = new AuctionStatus();
 
-            status.AuctionEnds = snapShot.EndsAt;            
-            status.Id = snapShot.Id;
-            status.TimeRemaining = TimeRemaining(snapShot.EndsAt);
+            status.AuctionEnds = snapshot.EndsAt;            
+            status.Id = snapshot.Id;
+            status.TimeRemaining = TimeRemaining(snapshot.EndsAt);
 
-            if (snapShot.CurrentBid != null)
+            if (snapshot.WinningBid != null)
             {
-                status.NumberOfBids = _bidHistory.NoOfBidsFor(snapShot.Id);
-                status.WinningBidderId = snapShot.CurrentBid.BiddersId;
-                status.CurrentPrice = snapShot.CurrentBid.CurrentPrice;
+                status.NumberOfBids = _bidHistory.NoOfBidsFor(snapshot.Id);
+                status.WinningBidderId = snapshot.WinningBid.BiddersId;
+                status.CurrentPrice = snapshot.WinningBid.CurrentPrice;
             }
             
             return status;

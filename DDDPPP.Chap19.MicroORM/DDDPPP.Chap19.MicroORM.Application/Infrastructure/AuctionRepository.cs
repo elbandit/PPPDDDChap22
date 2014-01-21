@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DDDPPP.Chap19.MicroORM.Application.Model.Auction;
 using DDDPPP.Chap19.MicroORM.Application.Application;
 using DDDPPP.Chap19.MicroORM.Application.Infrastructure.DataModel;
@@ -22,49 +20,26 @@ namespace DDDPPP.Chap19.MicroORM.Application.Infrastructure
 
         public void Add(Auction auction)
         {
-            var snapShot = auction.GetSnapShot();
+            var snapshot = auction.GetSnapshot();
             var auctionDTO = new AuctionDTO();
 
-            // map to auctionDTO
-            auctionDTO.Id = snapShot.Id;
-            auctionDTO.StartingPrice = snapShot.StartingPrice;
-            auctionDTO.AuctionEnds = snapShot.EndsAt;
-            auctionDTO.Version = 1;
-
-            if (snapShot.CurrentBid != null)
-            {
-                auctionDTO.BidderMemberId = snapShot.CurrentBid.BiddersId;
-                auctionDTO.CurrentPrice = snapShot.CurrentBid.CurrentPrice;
-                auctionDTO.MaximumBid = snapShot.CurrentBid.BiddersMaximumBid;
-                auctionDTO.TimeOfBid = snapShot.CurrentBid.TimeOfBid;
-            }
-
+            Map(auctionDTO, snapshot);
+                        
             _unitOfWork.RegisterNew(auctionDTO, this);
         }
 
         public void Save(Auction auction)
         {
-            var snapShot = auction.GetSnapShot();
+            var snapshot = auction.GetSnapshot();
 
             AuctionDTO auctionDTO;
 
             using (var connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["AuctionDB"].ConnectionString))
             {
-                auctionDTO = connection.Query<AuctionDTO>("Select * From Auctions Where Id = @Id", new { Id = snapShot.Id }).FirstOrDefault();
+                auctionDTO = connection.Query<AuctionDTO>("Select * From Auctions Where Id = @Id", new { Id = snapshot.Id }).FirstOrDefault();
             }
-                        
-            // map to auctionDTO
-            auctionDTO.Id = snapShot.Id;
-            auctionDTO.StartingPrice = snapShot.StartingPrice;
-            auctionDTO.AuctionEnds = snapShot.EndsAt;
 
-            if (snapShot.CurrentBid != null)
-            {
-                auctionDTO.BidderMemberId = snapShot.CurrentBid.BiddersId;
-                auctionDTO.CurrentPrice = snapShot.CurrentBid.CurrentPrice;
-                auctionDTO.MaximumBid = snapShot.CurrentBid.BiddersMaximumBid;
-                auctionDTO.TimeOfBid = snapShot.CurrentBid.TimeOfBid;
-            }
+            Map(auctionDTO, snapshot);
 
             _unitOfWork.RegisterAmended(auctionDTO, this);
         }
@@ -78,24 +53,25 @@ namespace DDDPPP.Chap19.MicroORM.Application.Infrastructure
                 auctionDTO = connection.Query<AuctionDTO>("Select * From Auctions Where Id = CAST(@Id AS uniqueidentifier)", new { Id = Id }).FirstOrDefault();
             }
 
-            var auctionSnapShot = new AuctionSnapShot();
+            var auctionSnapshot = new AuctionSnapshot();
 
-            auctionSnapShot.Id = auctionDTO.Id;
-            auctionSnapShot.EndsAt = auctionDTO.AuctionEnds;
-            auctionSnapShot.StartingPrice = auctionDTO.StartingPrice;
+            auctionSnapshot.Id = auctionDTO.Id;
+            auctionSnapshot.EndsAt = auctionDTO.AuctionEnds;
+            auctionSnapshot.StartingPrice = auctionDTO.StartingPrice;
+            auctionSnapshot.Version = auctionDTO.Version;
 
             if (auctionDTO.BidderMemberId.HasValue)
             {
-                var bidSnapShot = new BidSnapShot();
+                var bidSnapshot = new WinningBidSnapshot();
 
-                bidSnapShot.BiddersMaximumBid = auctionDTO.MaximumBid.Value;
-                bidSnapShot.CurrentPrice = auctionDTO.CurrentPrice.Value;
-                bidSnapShot.BiddersId = auctionDTO.BidderMemberId.Value;
-                bidSnapShot.TimeOfBid = auctionDTO.TimeOfBid.Value;
-                auctionSnapShot.CurrentBid = bidSnapShot;
+                bidSnapshot.BiddersMaximumBid = auctionDTO.MaximumBid.Value;
+                bidSnapshot.CurrentPrice = auctionDTO.CurrentPrice.Value;
+                bidSnapshot.BiddersId = auctionDTO.BidderMemberId.Value;
+                bidSnapshot.TimeOfBid = auctionDTO.TimeOfBid.Value;
+                auctionSnapshot.WinningBid = bidSnapshot;
             }
            
-            return Auction.CreateFrom(auctionSnapShot);
+            return Auction.CreateFrom(auctionSnapshot);
         }
 
         public void PersistCreationOf(IAggregateDataModel entity)
@@ -159,6 +135,22 @@ namespace DDDPPP.Chap19.MicroORM.Application.Infrastructure
                 {
                     throw new ConcurrencyException();
                 }  
+            }
+        }
+
+        public void Map(AuctionDTO auctionDTO, AuctionSnapshot snapshot)
+        {
+            auctionDTO.Id = snapshot.Id;
+            auctionDTO.StartingPrice = snapshot.StartingPrice;
+            auctionDTO.AuctionEnds = snapshot.EndsAt;
+            auctionDTO.Version = snapshot.Version;
+            
+            if (snapshot.WinningBid != null)
+            {
+                auctionDTO.BidderMemberId = snapshot.WinningBid.BiddersId;
+                auctionDTO.CurrentPrice = snapshot.WinningBid.CurrentPrice;
+                auctionDTO.MaximumBid = snapshot.WinningBid.BiddersMaximumBid;
+                auctionDTO.TimeOfBid = snapshot.WinningBid.TimeOfBid;
             }
         }
     }

@@ -5,9 +5,9 @@ using DDDPPP.Chap19.MicroORM.Application.Infrastructure;
 
 namespace DDDPPP.Chap19.MicroORM.Application.Model.Auction
 {
-    public class Money : ValueObject<Money>
+    public class Money : ValueObject<Money>, IComparable<Money>
     {
-        public decimal Value { get; private set; }
+        protected decimal Value { get; set; }
 
         public Money()
             : this(0m)
@@ -60,11 +60,14 @@ namespace DDDPPP.Chap19.MicroORM.Application.Model.Auction
             return new MoneySnapshot() { Value = this.Value };
         }
 
-        // Equality Implementtion
-
         protected override IEnumerable<object> GetAttributesToIncludeInEqualityCheck()
         {
             return new List<Object>() { Value };
+        }
+
+        public int CompareTo(Money other)
+        {
+            return this.Value.CompareTo(other.Value);
         }
     }
 }

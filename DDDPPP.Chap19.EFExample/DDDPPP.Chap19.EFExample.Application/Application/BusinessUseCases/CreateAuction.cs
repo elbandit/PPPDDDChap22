@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DDDPPP.Chap19.EFExample.Application.Model.Auction;
 using DDDPPP.Chap19.EFExample.Application.Model.BidHistory;
 using DDDPPP.Chap19.EFExample.Application.Infrastructure;
@@ -12,15 +10,15 @@ namespace DDDPPP.Chap19.EFExample.Application.Application.BusinessUseCases
     public class CreateAuction
     {
         private IAuctionRepository _auctions;
-        private AuctionExampleContext _unitOfWork;
+        private AuctionDatabaseContext _unitOfWork;
 
-        public CreateAuction(IAuctionRepository auctions, AuctionExampleContext unitOfWork)
+        public CreateAuction(IAuctionRepository auctions, AuctionDatabaseContext unitOfWork)
         {
             _auctions = auctions;            
             _unitOfWork = unitOfWork;
         }
 
-        public Guid Create(AuctionCreation command)
+        public Guid Create(NewAuctionRequest command)
         {
             var auctionId = Guid.NewGuid();
             var startingPrice = new Money(command.StartingPrice);

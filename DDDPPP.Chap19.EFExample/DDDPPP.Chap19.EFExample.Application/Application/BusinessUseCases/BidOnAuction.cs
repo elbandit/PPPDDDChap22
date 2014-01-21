@@ -11,10 +11,10 @@ namespace DDDPPP.Chap19.EFExample.Application.Application.BusinessUseCases
     {
         private IAuctionRepository _auctions;
         private IBidHistoryRepository _bidHistory;
-        private AuctionExampleContext _unitOfWork;
+        private AuctionDatabaseContext _unitOfWork;
         private IClock _clock;
 
-        public BidOnAuction(IAuctionRepository auctions, IBidHistoryRepository bidHistory, AuctionExampleContext unitOfWork, IClock clock)
+        public BidOnAuction(IAuctionRepository auctions, IBidHistoryRepository bidHistory, AuctionDatabaseContext unitOfWork, IClock clock)
         {
             _auctions = auctions;
             _bidHistory = bidHistory;

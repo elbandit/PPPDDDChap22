@@ -1,52 +1,67 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using DDDPPP.Chap19.MicroORM.Application.Infrastructure;
 
 namespace DDDPPP.Chap19.MicroORM.Application.Model.Auction
 {
     public class Auction : Entity<Guid>
-    {
+    {        
         public Auction(Guid id, Money startingPrice, DateTime endsAt)
         {
+            if (id == Guid.Empty)
+                throw new ArgumentNullException("Auction Id cannot be null");
+
+            if (startingPrice == null)
+                throw new ArgumentNullException("Starting Price cannot be null");
+
+            if (endsAt == DateTime.MinValue)
+                throw new ArgumentNullException("EndsAt must have a value");
+
             Id = id;
             StartingPrice = startingPrice;
             EndsAt = endsAt;
         }
 
-        private Auction(AuctionSnapShot snapShot)
+        private Auction(AuctionSnapshot snapshot)
         {
-            this.Id = snapShot.Id;
-            this.StartingPrice = new Money(snapShot.StartingPrice);
-            this.EndsAt = snapShot.EndsAt;
+            this.Id = snapshot.Id;
+            this.StartingPrice = new Money(snapshot.StartingPrice);
+            this.EndsAt = snapshot.EndsAt;
+            this.Version = snapshot.Version;
 
-            if (snapShot.CurrentBid != null)
-                WinningBid = WinningBid.CreateFrom(snapShot.CurrentBid);
+            if (snapshot.WinningBid != null)                          
+                CurrentWinningBid = WinningBid.CreateFrom(snapshot.WinningBid);            
         }
 
-        public static Auction CreateFrom(AuctionSnapShot snapShot)
+        public static Auction CreateFrom(AuctionSnapshot snapshot)
         {
-            return new Auction(snapShot);
+            return new Auction(snapshot);
         }
 
         private Money StartingPrice { get; set; }
-        private WinningBid WinningBid { get; set; }
+        private WinningBid CurrentWinningBid { get; set; }
         private DateTime EndsAt { get; set; }
 
-        public AuctionSnapShot GetSnapShot()
+        public AuctionSnapshot GetSnapshot()
         {
-            var snapShot = new AuctionSnapShot();
-            snapShot.Id = this.Id;
-            snapShot.StartingPrice = this.StartingPrice.GetSnapshot().Value;
-            snapShot.EndsAt = this.EndsAt;
+            var snapshot = new AuctionSnapshot();
+            snapshot.Id = this.Id;
+            snapshot.StartingPrice = this.StartingPrice.GetSnapshot().Value;
+            snapshot.EndsAt = this.EndsAt;
+            snapshot.Version = this.Version;
 
             if (HasACurrentBid())
-                snapShot.CurrentBid = WinningBid.GetSnapShot();
+                snapshot.WinningBid = CurrentWinningBid.GetSnapshot();            
 
-            return snapShot;
+            return snapshot;
         }
 
         private bool HasACurrentBid()
         {
-            return WinningBid != null;
+            return CurrentWinningBid != null;
         }
 
         private bool StillInProgress(DateTime currentTime)
@@ -61,10 +76,10 @@ namespace DDDPPP.Chap19.MicroORM.Application.Model.Auction
                 if (FirstOffer())
                     PlaceABidForTheFirst(offer);
                 else if (BidderIsIncreasingMaximumBidToNew(offer))
-                    WinningBid = WinningBid.RaiseMaximumBidTo(offer.MaximumBid);
-                else if (WinningBid.CanBeExceededBy(offer.MaximumBid))
+                    CurrentWinningBid = CurrentWinningBid.RaiseMaximumBidTo(offer.MaximumBid);
+                else if (CurrentWinningBid.CanBeExceededBy(offer.MaximumBid))
                 {
-                    var newBids = new AutomaticBidder().GenerateNextSequenceOfBidsAfter(offer, WinningBid);
+                    var newBids = new AutomaticBidder().GenerateNextSequenceOfBidsAfter(offer, CurrentWinningBid);
 
                     foreach (var bid in newBids)
                         Place(bid);
@@ -74,12 +89,12 @@ namespace DDDPPP.Chap19.MicroORM.Application.Model.Auction
 
         private bool BidderIsIncreasingMaximumBidToNew(Offer offer)
         {
-            return WinningBid.WasMadeBy(offer.Bidder) && offer.MaximumBid.IsGreaterThan(WinningBid.MaximumBid);
+            return CurrentWinningBid.WasMadeBy(offer.Bidder) && offer.MaximumBid.IsGreaterThan(CurrentWinningBid.MaximumBid);
         }
 
         private bool FirstOffer()
         {
-            return WinningBid == null;
+            return CurrentWinningBid == null;
         }
 
         private void PlaceABidForTheFirst(Offer offer)
@@ -90,11 +105,13 @@ namespace DDDPPP.Chap19.MicroORM.Application.Model.Auction
 
         private void Place(WinningBid newBid)
         {
-            if (!FirstOffer() && WinningBid.WasMadeBy(newBid.Bidder))
-                DomainEvents.Raise(new OutBid(Id, WinningBid.Bidder));               
+            if (!FirstOffer() && CurrentWinningBid.WasMadeBy(newBid.Bidder))
+                DomainEvents.Raise(new OutBid(Id, CurrentWinningBid.Bidder));
 
-            WinningBid = newBid;
+            CurrentWinningBid = newBid;
             DomainEvents.Raise(new BidPlaced(Id, newBid.Bidder, newBid.CurrentAuctionPrice.Amount, newBid.TimeOfBid));
         }
     }
+
+
 }

@@ -13,10 +13,9 @@ namespace DDDPPP.Chap19.EFExample.Application
             ObjectFactory.Initialize(config =>
             {
                 config.For<IAuctionRepository>().Use<AuctionRepository>();
-                config.For<IBidHistoryRepository>().Use<BidEventHistory>();
+                config.For<IBidHistoryRepository>().Use<BidHistoryRepository>();
                 config.For<IClock>().Use<SystemClock>();         
             });
-
         }
     }
 }

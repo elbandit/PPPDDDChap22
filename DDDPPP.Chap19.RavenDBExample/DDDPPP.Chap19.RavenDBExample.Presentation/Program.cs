@@ -24,7 +24,7 @@ namespace DDDPPP.Chap19.RavenDBExample.Presentation
             members.Add(memberIdA, "Ted");
             members.Add(memberIdB, "Rob");
 
-            var auctionId = CreateAution();
+            var auctionId = CreateAuction();
 
             Bid(auctionId, memberIdA, 10m);
             Bid(auctionId, memberIdB, 1.49m);
@@ -33,25 +33,25 @@ namespace DDDPPP.Chap19.RavenDBExample.Presentation
             Bid(auctionId, memberIdA, 12.00m);
         }
 
-        public static Guid CreateAution()
+        public static Guid CreateAuction()
         {
-            var createAuction = ObjectFactory.GetInstance<CreateAuction>();
+            var createAuctionService = ObjectFactory.GetInstance<CreateAuction>();
 
-            var auctionCreation = new AuctionCreation();
+            var newAuctionRequest = new NewAuctionRequest();
 
-            auctionCreation.StartingPrice = 0.99m;
-            auctionCreation.EndsAt = DateTime.Now.AddDays(1);
+            newAuctionRequest.StartingPrice = 0.99m;
+            newAuctionRequest.EndsAt = DateTime.Now.AddDays(1);
 
-            var auctionId = createAuction.Create(auctionCreation);
+            var auctionId = createAuctionService.Create(newAuctionRequest);
 
             return auctionId;
         }
 
         public static void Bid(Guid auctionId, Guid memberId, decimal amount)
         {
-            var bidOnAuction = ObjectFactory.GetInstance<BidOnAuction>();
+            var bidOnAuctionService = ObjectFactory.GetInstance<BidOnAuction>();
 
-            bidOnAuction.Bid(auctionId, memberId, amount);
+            bidOnAuctionService.Bid(auctionId, memberId, amount);
 
             PrintStatusOfAuctionBy(auctionId);
             PrintBidHistoryOf(auctionId);

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using DDDPPP.Chap19.MicroORM.Application.Model.Auction;
 using DDDPPP.Chap19.MicroORM.Application.Infrastructure;
 
@@ -8,9 +10,6 @@ namespace DDDPPP.Chap19.MicroORM.Application.Model.BidHistory
 {
     public class Bid : ValueObject<Bid>
     {
-        private Bid()
-        { }
-
         public Bid(Guid auctionId, Guid bidderId, Money amountBid, DateTime timeOfBid)
         {
             if (auctionId == Guid.Empty)

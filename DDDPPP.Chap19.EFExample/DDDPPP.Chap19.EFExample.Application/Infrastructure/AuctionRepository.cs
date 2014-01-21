@@ -8,75 +8,67 @@ namespace DDDPPP.Chap19.EFExample.Application.Infrastructure
 {
     public class AuctionRepository : IAuctionRepository
     {
-        private readonly AuctionExampleContext _auctionExampleContext;
+        private readonly AuctionDatabaseContext _auctionExampleContext;
 
-        public AuctionRepository(AuctionExampleContext auctionExampleContext)
+        public AuctionRepository(AuctionDatabaseContext auctionExampleContext)
         {
             _auctionExampleContext = auctionExampleContext;
         }
 
         public void Add(Auction auction)
-        {
-            var snapShot = auction.GetSnapShot();
+        {            
             var auctionDTO = new AuctionDTO();
 
-            // map to auctionDTO
-            auctionDTO.Id = snapShot.Id;
-            auctionDTO.StartingPrice = snapShot.StartingPrice;
-            auctionDTO.AuctionEnds = snapShot.EndsAt;
-            auctionDTO.Version = 1;
-
-            if (snapShot.CurrentBid != null)
-            {
-                auctionDTO.BidderMemberId = snapShot.CurrentBid.BiddersId;
-                auctionDTO.CurrentPrice = snapShot.CurrentBid.CurrentPrice;
-                auctionDTO.MaximumBid = snapShot.CurrentBid.BiddersMaximumBid;
-                auctionDTO.TimeOfBid = snapShot.CurrentBid.TimeOfBid;
-            }
-
+            Map(auctionDTO, auction.GetSnapshot());
+            
             _auctionExampleContext.Auctions.Add(auctionDTO); 
         }
 
         public void Save(Auction auction)
         {
-            var snapShot = auction.GetSnapShot();
-            var auctionDTO = _auctionExampleContext.Auctions.Find(snapShot.Id);
-                        
-            // map to auctionDTO
-            auctionDTO.Id = snapShot.Id;
-            auctionDTO.StartingPrice = snapShot.StartingPrice;
-            auctionDTO.AuctionEnds = snapShot.EndsAt;
+            var auctionDTO = _auctionExampleContext.Auctions.Find(auction.Id);
 
-            if (snapShot.CurrentBid != null)
-            {
-                auctionDTO.BidderMemberId = snapShot.CurrentBid.BiddersId;
-                auctionDTO.CurrentPrice = snapShot.CurrentBid.CurrentPrice;
-                auctionDTO.MaximumBid = snapShot.CurrentBid.BiddersMaximumBid;
-                auctionDTO.TimeOfBid = snapShot.CurrentBid.TimeOfBid;
-            }             
+            Map(auctionDTO, auction.GetSnapshot());                      
         }
 
         public Auction FindBy(Guid Id)
         {
             var auctionDTO = _auctionExampleContext.Auctions.Find(Id);
-            var auctionSnapShot = new AuctionSnapShot();
+            var auctionSnapshot = new AuctionSnapshot();
 
-            auctionSnapShot.Id = auctionDTO.Id;
-            auctionSnapShot.EndsAt = auctionDTO.AuctionEnds;
-            auctionSnapShot.StartingPrice = auctionDTO.StartingPrice;
+            auctionSnapshot.Id = auctionDTO.Id;
+            auctionSnapshot.EndsAt = auctionDTO.AuctionEnds;
+            auctionSnapshot.StartingPrice = auctionDTO.StartingPrice;
+            auctionSnapshot.Version = auctionDTO.Version;
 
             if (auctionDTO.BidderMemberId.HasValue)
             {
-                var bidSnapShot = new BidSnapShot();
+                var bidSnapshot = new WinningBidSnapshot();
 
-                bidSnapShot.BiddersMaximumBid = auctionDTO.MaximumBid.Value;
-                bidSnapShot.CurrentPrice = auctionDTO.CurrentPrice.Value;
-                bidSnapShot.BiddersId = auctionDTO.BidderMemberId.Value;
-                bidSnapShot.TimeOfBid = auctionDTO.TimeOfBid.Value;
-                auctionSnapShot.CurrentBid = bidSnapShot;
+                bidSnapshot.BiddersMaximumBid = auctionDTO.MaximumBid.Value;
+                bidSnapshot.CurrentPrice = auctionDTO.CurrentPrice.Value;
+                bidSnapshot.BiddersId = auctionDTO.BidderMemberId.Value;
+                bidSnapshot.TimeOfBid = auctionDTO.TimeOfBid.Value;
+                auctionSnapshot.WinningBid = bidSnapshot;
             }
            
-            return Auction.CreateFrom(auctionSnapShot);
+            return Auction.CreateFrom(auctionSnapshot);
+        }
+
+        public void Map(AuctionDTO auctionDTO, AuctionSnapshot snapshot)
+        {                        
+            auctionDTO.Id = snapshot.Id;
+            auctionDTO.StartingPrice = snapshot.StartingPrice;
+            auctionDTO.AuctionEnds = snapshot.EndsAt;
+            auctionDTO.Version = snapshot.Version;
+
+            if (snapshot.WinningBid != null)
+            {
+                auctionDTO.BidderMemberId = snapshot.WinningBid.BiddersId;
+                auctionDTO.CurrentPrice = snapshot.WinningBid.CurrentPrice;
+                auctionDTO.MaximumBid = snapshot.WinningBid.BiddersMaximumBid;
+                auctionDTO.TimeOfBid = snapshot.WinningBid.TimeOfBid;
+            }
         }
     }
 }

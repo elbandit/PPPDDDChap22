@@ -15,7 +15,7 @@ namespace DDDPPP.Chap19.NHibernateExample.Application.Application.BusinessUseCas
             _unitOfWork = unitOfWork;
         }
 
-        public Guid Create(AuctionCreation command)
+        public Guid Create(NewAuctionRequest command)
         {
             var auctionId = Guid.NewGuid();
             var startingPrice = new Money(command.StartingPrice);

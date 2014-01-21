@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Transactions;
 
 namespace DDDPPP.Chap19.MicroORM.Application.Infrastructure

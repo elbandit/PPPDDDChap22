@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DDDPPP.Chap19.RavenDBExample.Application.Model.BidHistory
 {
@@ -12,6 +10,9 @@ namespace DDDPPP.Chap19.RavenDBExample.Application.Model.BidHistory
 
         public BidHistory(IEnumerable<Bid> bids)
         {
+            if (bids == null)
+                throw new ArgumentNullException("Bids cannot be null");
+
             _bids = bids;
         }
 

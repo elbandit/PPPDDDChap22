@@ -55,19 +55,19 @@ namespace DDDPPP.Chap19.EFExample.Application.Model.Auction
             return MaximumBid.IsGreaterThan(CurrentAuctionPrice.Amount);
         }
 
-        public BidSnapShot GetSnapShot()
+        public WinningBidSnapshot GetSnapshot()
         {
-            var snapShot = new BidSnapShot();
+            var snapshot = new WinningBidSnapshot();
 
-            snapShot.BiddersId = this.Bidder;
-            snapShot.BiddersMaximumBid = this.MaximumBid.GetSnapshot().Value;
-            snapShot.CurrentPrice = this.CurrentAuctionPrice.Amount.GetSnapshot().Value;
-            snapShot.TimeOfBid = this.TimeOfBid;
+            snapshot.BiddersId = this.Bidder;
+            snapshot.BiddersMaximumBid = this.MaximumBid.GetSnapshot().Value;
+            snapshot.CurrentPrice = this.CurrentAuctionPrice.Amount.GetSnapshot().Value;
+            snapshot.TimeOfBid = this.TimeOfBid;
 
-            return snapShot;
+            return snapshot;
         }
 
-        public static WinningBid CreateFrom(BidSnapShot bidSnapShot)
+        public static WinningBid CreateFrom(WinningBidSnapshot bidSnapShot)
         {
             return new WinningBid(bidSnapShot.BiddersId, new Money(bidSnapShot.BiddersMaximumBid), new Money(bidSnapShot.CurrentPrice), bidSnapShot.TimeOfBid);
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using DDDPPP.Chap19.MicroORM.Application.Infrastructure;
 
 namespace DDDPPP.Chap19.MicroORM.Application.Model.Auction
@@ -19,12 +20,13 @@ namespace DDDPPP.Chap19.MicroORM.Application.Model.Auction
             if (timeOfBid == DateTime.MinValue)
                 throw new ArgumentNullException("TimeOfBid must have a value");
 
+
             Bidder = bidder;
             MaximumBid = maximumBid;
             TimeOfBid = timeOfBid;
             CurrentAuctionPrice = new Price(bid);
         }
-
+        
         public Guid Bidder { get; private set; }
         public Money MaximumBid { get; private set; }
         public DateTime TimeOfBid { get; private set; }
@@ -53,26 +55,26 @@ namespace DDDPPP.Chap19.MicroORM.Application.Model.Auction
             return MaximumBid.IsGreaterThan(CurrentAuctionPrice.Amount);
         }
 
+        public WinningBidSnapshot GetSnapshot()
+        {
+            var snapshot = new WinningBidSnapshot();
+
+            snapshot.BiddersId = this.Bidder;
+            snapshot.BiddersMaximumBid = this.MaximumBid.GetSnapshot().Value;
+            snapshot.CurrentPrice = this.CurrentAuctionPrice.Amount.GetSnapshot().Value;
+            snapshot.TimeOfBid = this.TimeOfBid;
+
+            return snapshot;
+        }
+
+        public static WinningBid CreateFrom(WinningBidSnapshot bidSnapShot)
+        {
+            return new WinningBid(bidSnapShot.BiddersId, new Money(bidSnapShot.BiddersMaximumBid), new Money(bidSnapShot.CurrentPrice), bidSnapShot.TimeOfBid);
+        }
+
         protected override IEnumerable<object> GetAttributesToIncludeInEqualityCheck()
         {
             return new List<Object>() { Bidder, MaximumBid, TimeOfBid, CurrentAuctionPrice };
-        }
-
-        public BidSnapShot GetSnapShot()
-        {
-            var snapShot = new BidSnapShot();
-
-            snapShot.BiddersId = this.Bidder;
-            snapShot.BiddersMaximumBid = this.MaximumBid.GetSnapshot().Value;
-            snapShot.CurrentPrice = this.CurrentAuctionPrice.Amount.GetSnapshot().Value;
-            snapShot.TimeOfBid = this.TimeOfBid;
-
-            return snapShot;
-        }
-
-        public static WinningBid CreateFrom(BidSnapShot bidSnapShot)
-        {
-            return new WinningBid(bidSnapShot.BiddersId, new Money(bidSnapShot.BiddersMaximumBid), new Money(bidSnapShot.CurrentPrice), bidSnapShot.TimeOfBid);
         }
     }
 }

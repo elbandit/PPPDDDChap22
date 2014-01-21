@@ -7,46 +7,45 @@ using DDDPPP.Chap19.EFExample.Application.Infrastructure.DataModel;
 
 namespace DDDPPP.Chap19.EFExample.Application.Infrastructure
 {
-    public class BidEventHistory : IBidHistoryRepository
+    public class BidHistoryRepository : IBidHistoryRepository
     {
-        private readonly AuctionExampleContext _auctionExampleContext;
+        private readonly AuctionDatabaseContext _auctionExampleContext;
 
-        public BidEventHistory(AuctionExampleContext auctionExampleContext)
+        public BidHistoryRepository(AuctionDatabaseContext auctionExampleContext)
         {
             _auctionExampleContext = auctionExampleContext;
         }
 
         public int NoOfBidsFor(Guid autionId)
         {                     
-            return _auctionExampleContext.BidHistories.Count(x => x.AuctionId == autionId);                                        
+            return _auctionExampleContext.Bids.Count(x => x.AuctionId == autionId);                                        
         }
 
-        public void Add(Bid bid)
-        
+        public void Add(Bid bid)        
         {
-            var bidHistoryDTO = new BidHistoryDTO();
+            var bidDTO = new BidDTO();
 
-            bidHistoryDTO.AuctionId = bid.AuctionId;
-            bidHistoryDTO.Bid = bid.AmountBid.GetSnapshot().Value;
-            bidHistoryDTO.BidderId = bid.Bidder;
-            bidHistoryDTO.TimeOfBid = bid.TimeOfBid;
+            bidDTO.AuctionId = bid.AuctionId;
+            bidDTO.Bid = bid.AmountBid.GetSnapshot().Value;
+            bidDTO.BidderId = bid.Bidder;
+            bidDTO.TimeOfBid = bid.TimeOfBid;
 
-            bidHistoryDTO.Id = Guid.NewGuid();
+            bidDTO.Id = Guid.NewGuid();
 
-            _auctionExampleContext.BidHistories.Add(bidHistoryDTO); 
+            _auctionExampleContext.Bids.Add(bidDTO); 
         }
 
         public BidHistory FindBy(Guid auctionId)
         {
-            var bids = _auctionExampleContext.BidHistories.Where<BidHistoryDTO>(x => x.AuctionId == auctionId).ToList();
-            var bidds = new List<Bid>();
+            var bidDTOs = _auctionExampleContext.Bids.Where<BidDTO>(x => x.AuctionId == auctionId).ToList();
+            var bids = new List<Bid>();
 
-            foreach (var bid in bids)
-            { 
-                bidds.Add(new Bid(bid.AuctionId, bid.BidderId, new Money(bid.Bid), bid.TimeOfBid));
+            foreach (var bidDTO in bidDTOs)
+            {
+                bids.Add(new Bid(bidDTO.AuctionId, bidDTO.BidderId, new Money(bidDTO.Bid), bidDTO.TimeOfBid));
             }
 
-            return new BidHistory(bidds);
+            return new BidHistory(bids);
         }
     }
 }

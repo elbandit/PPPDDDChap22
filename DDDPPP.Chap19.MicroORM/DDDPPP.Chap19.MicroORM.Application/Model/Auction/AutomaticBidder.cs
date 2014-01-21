@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DDDPPP.Chap19.MicroORM.Application.Model.Auction
 {
-    public class AutomaticBidder // DomainService
+    public class AutomaticBidder
     {
         public IEnumerable<WinningBid> GenerateNextSequenceOfBidsAfter(Offer offer, WinningBid currentWinningBid)
         {
@@ -45,6 +45,6 @@ namespace DDDPPP.Chap19.MicroORM.Application.Model.Auction
                 bid = new WinningBid(offer.Bidder, offer.MaximumBid, offer.MaximumBid, offer.TimeOfOffer);
 
             return bid;
-        }
+        }   
     }
 }
