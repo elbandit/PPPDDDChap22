@@ -4,7 +4,7 @@ using DDDPPP.Chap19.RavenDBExample.Application.Infrastructure;
 
 namespace DDDPPP.Chap19.RavenDBExample.Application.Model.Auction
 {
-    public class Money : ValueObject<Money>
+    public class Money : ValueObject<Money>, IComparable<Money>
     {
         public decimal Value { get; private set; }
 
@@ -54,11 +54,14 @@ namespace DDDPPP.Chap19.RavenDBExample.Application.Model.Auction
             return string.Format("{0}", Value);
         }
 
-        // Equality Implementtion
-
         protected override IEnumerable<object> GetAttributesToIncludeInEqualityCheck()
         {
             return new List<Object>() { Value };
+        }
+
+        public int CompareTo(Money other)
+        {
+            return this.Value.CompareTo(other.Value);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace DDDPPP.Chap19.RavenDBExample.Application.Model.BidHistory
 
         public IEnumerable<Bid> ShowAllBids()
         {
-            var bids = _bids.OrderByDescending(x => x.AmountBid.Value).ThenBy(x => x.TimeOfBid);
+            var bids = _bids.OrderByDescending(x => x.AmountBid).ThenBy(x => x.TimeOfBid);
 
             return bids;
         }
