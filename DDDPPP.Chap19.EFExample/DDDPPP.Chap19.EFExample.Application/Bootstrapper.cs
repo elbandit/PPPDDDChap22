@@ -14,7 +14,11 @@ namespace DDDPPP.Chap19.EFExample.Application
             {
                 config.For<IAuctionRepository>().Use<AuctionRepository>();
                 config.For<IBidHistoryRepository>().Use<BidHistoryRepository>();
-                config.For<IClock>().Use<SystemClock>();         
+                config.For<IClock>().Use<SystemClock>();
+
+                config.For<AuctionDatabaseContext>()
+                    .HybridHttpOrThreadLocalScoped()
+                    .Use(x => new AuctionDatabaseContext());
             });
         }
     }
