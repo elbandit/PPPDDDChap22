@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DDDPPP.Chap19.BuilderPattern", "DDDPPP.Chap19.BuilderPattern\DDDPPP.Chap19.BuilderPattern.csproj", "{C65818BE-BE06-46C1-AE14-4302D3DC81EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DDDPPP.Chap19.BuilderPattern.Tests", "DDDPPP.Chap19.BuilderPattern.Tests\DDDPPP.Chap19.BuilderPattern.Tests.csproj", "{E34878FF-9211-4CFC-843D-8F52F8FFF2E1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C65818BE-BE06-46C1-AE14-4302D3DC81EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C65818BE-BE06-46C1-AE14-4302D3DC81EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C65818BE-BE06-46C1-AE14-4302D3DC81EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C65818BE-BE06-46C1-AE14-4302D3DC81EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E34878FF-9211-4CFC-843D-8F52F8FFF2E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E34878FF-9211-4CFC-843D-8F52F8FFF2E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E34878FF-9211-4CFC-843D-8F52F8FFF2E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E34878FF-9211-4CFC-843D-8F52F8FFF2E1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
