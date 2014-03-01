@@ -1,7 +1,7 @@
-PPPDDDChap19
+PPPDDDChap22
 ============
 
-Principles, Practices and Patterns of Domain-Driven Design: Chapter 19 Code Samples
+Principles, Practices and Patterns of Domain-Driven Design: Chapter 22 Code Samples
 
 Examples of the repository pattern using:
 
